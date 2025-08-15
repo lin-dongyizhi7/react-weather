@@ -2,8 +2,8 @@ import axios from 'axios';
 
 // 天气API配置 - 使用官方免费接口
 const API_BASE_URL = 'http://gfeljm.tianqiapi.com/free/v2030';
-const APP_ID = 'your_app_id_here'; // 请替换为您的实际APP_ID
-const APP_SECRET = 'your_app_secret_here'; // 请替换为您的实际APP_SECRET
+const APP_ID = '76172745'; // 请替换为您的实际APP_ID
+const APP_SECRET = 'zg7QrDod'; // 请替换为您的实际APP_SECRET
 
 // 根据API文档定义的数据接口
 export interface WeatherData {
