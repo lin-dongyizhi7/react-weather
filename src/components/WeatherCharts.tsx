@@ -9,9 +9,9 @@ interface WeatherChartsProps {
 const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
   // 24小时温度变化图表配置
   const getHourlyChartOption = () => {
-    const hours = weatherData.hourlyForecast.map(item => item.time);
+    const hours = weatherData.hourlyForecast.map(item => item.hours);
     const temperatures = weatherData.hourlyForecast.map(item => item.temperature);
-    const humidity = weatherData.hourlyForecast.map(item => item.humidity);
+    const visibility = weatherData.hourlyForecast.map(item => parseFloat(item.visibility) || 0);
 
     return {
       title: {
@@ -30,7 +30,7 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
         }
       },
       legend: {
-        data: ['温度 (°C)', '湿度 (%)'],
+        data: ['温度 (°C)', '能见度 (km)'],
         top: 30
       },
       grid: {
@@ -58,7 +58,7 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
         },
         {
           type: 'value',
-          name: '湿度 (%)',
+          name: '能见度 (km)',
           position: 'right',
           axisLabel: {
             color: '#4ecdc4'
@@ -93,10 +93,10 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
           }
         },
         {
-          name: '湿度 (%)',
+          name: '能见度 (km)',
           type: 'line',
           yAxisIndex: 1,
-          data: humidity,
+          data: visibility,
           smooth: true,
           lineStyle: {
             color: '#4ecdc4',
@@ -105,75 +105,6 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
           itemStyle: {
             color: '#4ecdc4'
           }
-        }
-      ]
-    };
-  };
-
-  // 7天天气预报图表配置
-  const getDailyChartOption = () => {
-    const dates = weatherData.dailyForecast.map(item => item.date);
-    const highTemps = weatherData.dailyForecast.map(item => item.highTemp);
-    const lowTemps = weatherData.dailyForecast.map(item => item.lowTemp);
-
-    return {
-      title: {
-        text: '7天天气预报',
-        left: 'center',
-        textStyle: {
-          color: '#333',
-          fontSize: 16,
-          fontWeight: 'bold'
-        }
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
-      legend: {
-        data: ['最高温度', '最低温度'],
-        top: 30
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: {
-        type: 'category',
-        data: dates,
-        axisLabel: {
-          color: '#666'
-        }
-      },
-      yAxis: {
-        type: 'value',
-        name: '温度 (°C)',
-        axisLabel: {
-          color: '#666'
-        }
-      },
-      series: [
-        {
-          name: '最高温度',
-          type: 'bar',
-          data: highTemps,
-          itemStyle: {
-            color: '#ff6b6b'
-          },
-          barWidth: '40%'
-        },
-        {
-          name: '最低温度',
-          type: 'bar',
-          data: lowTemps,
-          itemStyle: {
-            color: '#4ecdc4'
-          },
-          barWidth: '40%'
         }
       ]
     };
@@ -193,7 +124,7 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
 
     return {
       title: {
-        text: '天气状况分布',
+        text: '24小时天气状况分布',
         left: 'center',
         textStyle: {
           color: '#333',
@@ -241,6 +172,70 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
     };
   };
 
+  // 空气质量雷达图配置
+  const getAirQualityRadarOption = () => {
+    if (!weatherData.aqi || weatherData.aqi.pm25 === '') {
+      return null;
+    }
+
+    const indicators = [
+      { name: 'PM2.5', max: 100 },
+      { name: 'PM10', max: 100 },
+      { name: 'O₃', max: 100 },
+      { name: 'NO₂', max: 100 },
+      { name: 'SO₂', max: 100 }
+    ];
+
+    const values = [
+      parseFloat(weatherData.aqi.pm25) || 0,
+      parseFloat(weatherData.aqi.pm10) || 0,
+      parseFloat(weatherData.aqi.o3) || 0,
+      parseFloat(weatherData.aqi.no2) || 0,
+      parseFloat(weatherData.aqi.so2) || 0
+    ];
+
+    return {
+      title: {
+        text: '空气质量六因子',
+        left: 'center',
+        textStyle: {
+          color: '#333',
+          fontSize: 16,
+          fontWeight: 'bold'
+        }
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      radar: {
+        indicator: indicators,
+        radius: '60%'
+      },
+      series: [
+        {
+          name: 'AQI指数',
+          type: 'radar',
+          data: [
+            {
+              value: values,
+              name: '当前值',
+              areaStyle: {
+                color: 'rgba(102, 126, 234, 0.3)'
+              },
+              lineStyle: {
+                color: '#667eea',
+                width: 2
+              },
+              itemStyle: {
+                color: '#667eea'
+              }
+            }
+          ]
+        }
+      ]
+    };
+  };
+
   return (
     <div className="weather-charts">
       <div className="chart-container">
@@ -252,17 +247,19 @@ const WeatherCharts: React.FC<WeatherChartsProps> = ({ weatherData }) => {
       
       <div className="chart-container">
         <ReactECharts 
-          option={getDailyChartOption()} 
-          style={{ height: '400px', width: '100%' }}
-        />
-      </div>
-      
-      <div className="chart-container">
-        <ReactECharts 
           option={getWeatherPieChartOption()} 
           style={{ height: '400px', width: '100%' }}
         />
       </div>
+      
+      {getAirQualityRadarOption() && (
+        <div className="chart-container">
+          <ReactECharts 
+            option={getAirQualityRadarOption()} 
+            style={{ height: '400px', width: '100%' }}
+          />
+        </div>
+      )}
     </div>
   );
 };

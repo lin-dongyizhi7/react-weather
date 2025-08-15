@@ -29,6 +29,7 @@
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .mode-toggle, .refresh-button {
@@ -76,6 +77,67 @@
   background: #5a6fd8;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* 自动更新状态样式 */
+.auto-update-status {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+}
+
+.update-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.update-info:last-of-type {
+  margin-bottom: 0;
+}
+
+.update-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.update-time {
+  color: #667eea;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.countdown {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.countdown.update-now {
+  color: #dc3545;
+  animation: pulse 1s infinite;
+  font-weight: 700;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.auto-update-note {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #bbdefb;
 }
 
 .app-main {
@@ -209,11 +271,23 @@
   
   .header-controls {
     gap: 10px;
+    margin-bottom: 15px;
   }
   
   .mode-toggle, .refresh-button {
     padding: 10px 16px;
     font-size: 0.8rem;
+  }
+  
+  .auto-update-status {
+    padding: 15px;
+  }
+  
+  .update-info {
+    font-size: 0.9rem;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
   }
   
   .error-message {
@@ -245,5 +319,14 @@
     width: 100%;
     max-width: 200px;
     justify-content: center;
+  }
+  
+  .auto-update-status {
+    padding: 12px;
+  }
+  
+  .auto-update-note {
+    font-size: 0.8rem;
+    padding: 8px 15px;
   }
 }

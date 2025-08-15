@@ -24,11 +24,11 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
     }
   };
 
-  const getWindDirection = (windSpeed: number) => {
-    if (windSpeed < 5) return '微风';
-    if (windSpeed < 10) return '轻风';
-    if (windSpeed < 15) return '中风';
-    if (windSpeed < 20) return '强风';
+  const getWindDescription = (windSpeed: string) => {
+    if (windSpeed.includes('1级') || windSpeed.includes('2级')) return '微风';
+    if (windSpeed.includes('3级') || windSpeed.includes('4级')) return '轻风';
+    if (windSpeed.includes('5级') || windSpeed.includes('6级')) return '中风';
+    if (windSpeed.includes('7级') || windSpeed.includes('8级')) return '强风';
     return '大风';
   };
 
@@ -38,13 +38,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
         <div className="city-info">
           <h1 className="city-name">{weatherData.city}</h1>
           <p className="current-time">
-            {new Date().toLocaleString('zh-CN', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}
+            {weatherData.date} {weatherData.week} {weatherData.update_time}
           </p>
         </div>
         <div className="weather-icon">
@@ -58,6 +52,9 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
           <span className="temp-unit">°C</span>
         </div>
         <div className="weather-desc">{weatherData.weather}</div>
+        <div className="temp-range">
+          {weatherData.lowTemp}° / {weatherData.highTemp}°
+        </div>
       </div>
 
       <div className="weather-details">
@@ -65,7 +62,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
           <div className="detail-icon">💧</div>
           <div className="detail-content">
             <div className="detail-label">湿度</div>
-            <div className="detail-value">{weatherData.humidity}%</div>
+            <div className="detail-value">{weatherData.humidity}</div>
           </div>
         </div>
 
@@ -74,8 +71,8 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
           <div className="detail-content">
             <div className="detail-label">风速</div>
             <div className="detail-value">
-              {weatherData.windSpeed} km/h
-              <div className="wind-desc">{getWindDirection(weatherData.windSpeed)}</div>
+              {weatherData.windSpeed}
+              <div className="wind-desc">{getWindDescription(weatherData.windSpeed)}</div>
             </div>
           </div>
         </div>
@@ -92,10 +89,24 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
           <div className="detail-icon">👁️</div>
           <div className="detail-content">
             <div className="detail-label">能见度</div>
-            <div className="detail-value">{weatherData.visibility} km</div>
+            <div className="detail-value">{weatherData.visibility}</div>
           </div>
         </div>
       </div>
+
+      {weatherData.air && weatherData.air !== '0' && (
+        <div className="air-quality">
+          <h3>空气质量</h3>
+          <div className="air-info">
+            <div className="air-level">
+              <span className="air-label">AQI:</span>
+              <span className="air-value">{weatherData.air}</span>
+              <span className="air-status">{weatherData.airLevel}</span>
+            </div>
+            <div className="air-tips">{weatherData.airTips}</div>
+          </div>
+        </div>
+      )}
 
       <div className="sun-info">
         <div className="sun-item">
@@ -114,12 +125,28 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
         </div>
       </div>
 
+      {weatherData.alarm && weatherData.alarm.length > 0 && (
+        <div className="weather-alarm">
+          <h3>⚠️ 气象预警</h3>
+          {weatherData.alarm.map((alarm, index) => (
+            <div key={index} className="alarm-item">
+              <div className="alarm-header">
+                <span className="alarm-type">{alarm.alarmType}</span>
+                <span className={`alarm-level ${alarm.alarmLevel}`}>{alarm.alarmLevel}</span>
+              </div>
+              <div className="alarm-title">{alarm.alarmTitle}</div>
+              <div className="alarm-content">{alarm.alarmContent}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="hourly-preview">
-        <h3>今日预报</h3>
+        <h3>24小时预报</h3>
         <div className="hourly-list">
           {weatherData.hourlyForecast.slice(0, 6).map((item, index) => (
             <div key={index} className="hourly-item">
-              <div className="hourly-time">{item.time}</div>
+              <div className="hourly-time">{item.hours}</div>
               <div className="hourly-icon">{getWeatherIcon(item.weather)}</div>
               <div className="hourly-temp">{item.temperature}°</div>
             </div>
@@ -131,3 +158,4 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weatherData }) => {
 };
 
 export default WeatherCard;
+

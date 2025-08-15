@@ -58,6 +58,13 @@
   font-size: 1.5rem;
   font-weight: 500;
   opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.temp-range {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  font-weight: 400;
 }
 
 .weather-details {
@@ -101,6 +108,139 @@
   font-size: 0.8rem;
   opacity: 0.8;
   margin-top: 3px;
+}
+
+/* 空气质量样式 */
+.air-quality {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.air-quality h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.air-info {
+  text-align: center;
+}
+
+.air-level {
+  margin-bottom: 15px;
+}
+
+.air-label {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-right: 10px;
+}
+
+.air-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-right: 15px;
+  color: #4ecdc4;
+}
+
+.air-status {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 5px 15px;
+  background: rgba(78, 205, 196, 0.3);
+  border-radius: 20px;
+}
+
+.air-tips {
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* 气象预警样式 */
+.weather-alarm {
+  background: rgba(255, 193, 7, 0.2);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 193, 7, 0.3);
+}
+
+.weather-alarm h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  color: #ffc107;
+}
+
+.alarm-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.alarm-item:last-child {
+  margin-bottom: 0;
+}
+
+.alarm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.alarm-type {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.alarm-level {
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.alarm-level.红色 {
+  background: rgba(220, 53, 69, 0.3);
+  color: #ff6b6b;
+}
+
+.alarm-level.橙色 {
+  background: rgba(253, 126, 20, 0.3);
+  color: #fd7e14;
+}
+
+.alarm-level.黄色 {
+  background: rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+}
+
+.alarm-level.蓝色 {
+  background: rgba(13, 202, 240, 0.3);
+  color: #0dcaf0;
+}
+
+.alarm-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.alarm-content {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.4;
 }
 
 .sun-info {
@@ -203,6 +343,12 @@
   .hourly-item {
     flex: 0 0 calc(50% - 5px);
   }
+  
+  .alarm-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -223,5 +369,10 @@
   
   .hourly-item {
     flex: 0 0 100%;
+  }
+  
+  .air-level {
+    flex-direction: column;
+    gap: 10px;
   }
 }
