@@ -1,0 +1,196 @@
+.weekly-forecast {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px 0;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.weekly-forecast h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.forecast-day {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.forecast-day:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.day-header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.date {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.week {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.weather-icon {
+  text-align: center;
+  font-size: 3rem;
+  margin: 15px 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.weather-desc {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.temperature {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.temperature .high {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ff6b6b;
+  margin-right: 15px;
+}
+
+.temperature .low {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #74b9ff;
+}
+
+.wind-info {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.wind {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.wind-speed {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.details {
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.detail-item .label {
+  opacity: 0.8;
+}
+
+.detail-item .value {
+  font-weight: 500;
+}
+
+.sun-times {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sunrise, .sunset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.sunrise .icon, .sunset .icon {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.sunrise .time, .sunset .time {
+  opacity: 0.9;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .forecast-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .forecast-day {
+    padding: 15px;
+  }
+  
+  .weather-icon {
+    font-size: 2.5rem;
+  }
+  
+  .temperature .high {
+    font-size: 1.3rem;
+  }
+  
+  .temperature .low {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .weekly-forecast {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .forecast-day {
+    padding: 12px;
+  }
+  
+  .weather-icon {
+    font-size: 2rem;
+  }
+  
+  .details {
+    font-size: 0.8rem;
+  }
+}

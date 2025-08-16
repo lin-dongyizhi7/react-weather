@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import CitySearch from './CitySearch';
 import WeatherCard from './WeatherCard';
 import WeatherCharts from './WeatherCharts';
+import WeeklyForecast from './WeeklyForecast';
+import MonthlyForecast from './MonthlyForecast';
 import { getWeatherData, getMockWeatherData, WeatherData } from '../services/weatherApi';
 import './WeatherApp.css';
 
@@ -199,6 +201,8 @@ const WeatherApp: React.FC = () => {
           <>
             <WeatherCard weatherData={weatherData} />
             <WeatherCharts weatherData={weatherData} />
+            <WeeklyForecast weeklyForecast={weatherData.weeklyForecast} />
+            <MonthlyForecast monthlyForecast={weatherData.monthlyForecast} />
           </>
         )}
 
